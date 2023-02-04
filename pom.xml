@@ -55,6 +55,7 @@
 
 		<!-- maven-gpg-plugin -->
 		<maven-gpg-plugin.skip>true</maven-gpg-plugin.skip>
+		<maven-gpg-plugin.passphrase>unknow</maven-gpg-plugin.passphrase>
 
 		<!-- plugins versions -->
 		<build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
@@ -188,6 +189,7 @@
 						</goals>
 						<configuration>
 							<skip>${maven-gpg-plugin.skip}</skip>
+							<passphrase>${maven-gpg-plugin.passphrase}</passphrase>
 						</configuration>
 					</execution>
 				</executions>
