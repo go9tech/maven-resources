@@ -30,6 +30,8 @@ RUN apt-get update \
 
 # Maven Central Signature
 
+ENV MAVEN_CENTRAL_PASSWORD "$MAVEN_CENTRAL_PASSWORD"
+
 COPY target/maven-central-signature.tpl ./maven-central-signature.tpl
 RUN envsubst < maven-central-signature.tpl > maven-central-signature.gpg \
   && cat maven-central-signature.tpl \
