@@ -5,7 +5,7 @@ USER root
 # gpg
 
 RUN apt-get update \
-  && apt-get -y install gnupg \
+  && apt-get -y install gnupg2 \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
