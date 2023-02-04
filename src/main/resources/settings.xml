@@ -41,6 +41,7 @@
 	</servers>
 
 	<profiles>
+
 		<profile>
 			<id>default</id>
 			<activation>
@@ -52,9 +53,6 @@
 				<!-- maven-gpg-plugin properties -->
 				<maven-gpg-plugin.skip>false</maven-gpg-plugin.skip>
 				<maven-gpg-plugin.passphrase>${env.MAVEN_CENTRAL_PASSWORD}</maven-gpg-plugin.passphrase>
-
-				<!--  -->
-				<sonar.login>${env.SONAR_LOGIN}</sonar.login>
 
 			</properties>
 
