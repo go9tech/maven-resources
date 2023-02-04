@@ -52,7 +52,7 @@
 
 				<!-- maven-gpg-plugin properties -->
 				<maven-gpg-plugin.skip>false</maven-gpg-plugin.skip>
-				<maven-gpg-plugin.passphrase>$MAVEN_CENTRAL_PASSWORD</maven-gpg-plugin.passphrase>
+				<maven-gpg-plugin.passphrase>${env.MAVEN_CENTRAL_PASSWORD}</maven-gpg-plugin.passphrase>
 
 			</properties>
 
