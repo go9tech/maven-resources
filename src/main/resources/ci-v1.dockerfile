@@ -7,7 +7,8 @@ USER root
 RUN apt-get update \
   && apt-get -y install gnupg2 \
   && apt-get clean all \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && gpg --version
 
 COPY target/maven-central.gpg ./maven-central.gpg
 RUN gpg --batch --generate-key maven-central.gpg \
