@@ -3,15 +3,6 @@ FROM openjdk:19-jdk-slim
 USER root
 
 
-# gpg
-
-RUN apt-get update \
-  && apt-get -y install gnupg2 \
-  && apt-get clean all \
-  && rm -rf /var/lib/apt/lists/* \
-  && gpg --version
-
-
 # curl
 
 RUN apt-get update \
@@ -27,6 +18,24 @@ RUN apt-get update \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
+
+# gpg
+
+RUN apt-get update \
+  && apt-get -y install gnupg2 \
+  && apt-get clean all \
+  && rm -rf /var/lib/apt/lists/* \
+  && gpg --version
+
+
+# Maven Central Signature
+
+COPY target/maven-central-signature.tpl ./maven-central-signature.tpl
+RUN envsubst < maven-central-signature.tpl > maven-central-signature.gpg \
+  && cat maven-central-signature.gpg \
+  && gpg --batch --generate-key maven-central-signature.gpg \
+  && rm maven-central-signature.* \
+  && gpg --list-secret-keys
 
 # unzip
 
@@ -82,15 +91,6 @@ ARG TERRAGRUNT_BASE_URL=https://github.com/gruntwork-io/terragrunt/releases/down
 RUN curl -sS -L ${TERRAGRUNT_BASE_URL}/terragrunt_linux_amd64 -o /usr/bin/terragrunt \
   && chmod +x /usr/bin/terragrunt \
   && terragrunt --version
-
-
-# Maven Central Signature
-
-COPY target/maven-central-signature.tpl ./maven-central-signature.tpl
-RUN envsubst < maven-central-signature.tpl > maven-central-signature.gpg \
-  && gpg --batch --generate-key maven-central-signature.gpg \
-  && rm maven-central-signature.* \
-  && gpg --list-secret-keys
 
 
 # Custom scripts
