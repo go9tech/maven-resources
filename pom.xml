@@ -10,13 +10,13 @@
 	</parent>
 
 	<groupId>tech.go9</groupId>
-	<artifactId>pipelines</artifactId>
+	<artifactId>maven-resources</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Pipelines</name>
-	<description>Pipelines</description>
-	<url>https://bitbucket.org/go9/Kubernetes </url>
+	<name>Maven Resources</name>
+	<description>Maven Resources</description>
+	<url>https://bitbucket.org/go9tech/maven-resources</url>
 
 	<licenses>
 		<license>
@@ -35,9 +35,9 @@
 	</developers>
 
 	<scm>
-		<url>https://bitbucket.org/go9/pipelines</url>
-		<connection>scm:git:https://bitbucket.org/go9/pipelines</connection>
-		<developerConnection>scm:git:https://bitbucket.org/go9/pipelines</developerConnection>
+		<url>https://bitbucket.org/go9tech/maven-resources</url>
+		<connection>scm:git:https://bitbucket.org/go9tech/maven-resources.git</connection>
+		<developerConnection>scm:git:https://bitbucket.org/go9tech/maven-resources.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -55,7 +55,7 @@
 
 		<!-- maven-gpg-plugin -->
 		<maven-gpg-plugin.skip>true</maven-gpg-plugin.skip>
-		<maven-gpg-plugin.passphrase>unknow</maven-gpg-plugin.passphrase>
+		<maven-gpg-plugin.passphrase>${env.GPG_PASSPHRASE}</maven-gpg-plugin.passphrase>
 
 		<!-- plugins versions -->
 		<build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
@@ -90,6 +90,10 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
 					<version>${maven-gpg-plugin.version}</version>
+					<configuration>
+						<skip>${maven-gpg-plugin.skip}</skip>
+						<passphrase>${maven-gpg-plugin.passphrase}</passphrase>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -187,10 +191,6 @@
 						<goals>
 							<goal>sign</goal>
 						</goals>
-						<configuration>
-							<skip>${maven-gpg-plugin.skip}</skip>
-							<passphrase>${maven-gpg-plugin.passphrase}</passphrase>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -209,7 +209,7 @@
 								<contextDir>${docker-maven-plugin.contextDir}</contextDir>
 								<dockerFile>${docker-maven-plugin.dockerFileDir}/ci-v1.dockerfile</dockerFile>
 								<args>
-									<MAVEN_CENTRAL_PASSWORD>${maven-gpg-plugin.passphrase}</MAVEN_CENTRAL_PASSWORD>
+									<GPG_PASSPHRASE>${maven-gpg-plugin.passphrase}</GPG_PASSPHRASE>
 								</args>
 							</build>
 						</image>

@@ -52,7 +52,12 @@
 
 				<!-- maven-gpg-plugin properties -->
 				<maven-gpg-plugin.skip>false</maven-gpg-plugin.skip>
-				<maven-gpg-plugin.passphrase>${env.MAVEN_CENTRAL_PASSWORD}</maven-gpg-plugin.passphrase>
+
+				<!-- sonar-maven-plugin properties -->
+				<sonar-maven-plugin.skip>false</sonar-maven-plugin.skip>
+
+				<!-- sonar-maven-plugin properties -->
+				<snyk-maven-plugin.skip>false</snyk-maven-plugin.skip>
 
 			</properties>
 
@@ -94,6 +99,18 @@
 						<enabled>false</enabled>
 					</releases>
 				</pluginRepository>
+				<pluginRepository>
+					<id>maven-central-snapshot</id>
+					<name>Maven Central Snapshot Repository</name>
+					<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</pluginRepository>
 			</pluginRepositories>
 
 			<repositories>
@@ -126,6 +143,18 @@
 					<id>spring-snapshot</id>
 					<name>Spring Snapshot Repository</name>
 					<url>https://repo.spring.io/snapshot</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>maven-central-snapshot</id>
+					<name>Maven Central Snapshot Repository</name>
+					<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
 					<snapshots>
 						<enabled>true</enabled>
 						<updatePolicy>always</updatePolicy>
