@@ -12,8 +12,8 @@ pipelines:
           - apt-get update && apt-get -y install gettext-base && apt-get clean all && rm -rf /var/lib/apt/lists/*
           - envsubst < src/main/resources/maven-central-signature.tpl > src/main/resources/maven-central-signature.gpg
           - apt-get update && apt-get -y install gnupg2 && apt-get clean all && rm -rf /var/lib/apt/lists/* && gpg --version
-          - gpg --batch --generate-key src/main/resources/maven-central-signature.gpg && rm src/main/resources/maven-central-signature.gpg && gpg --list-secret-keys && cp -r ~/.gnupg/ /tmp/.gnupg/ && ls -la /tmp/.gnupg/
+          - gpg --batch --generate-key src/main/resources/maven-central-signature.gpg && rm src/main/resources/maven-central-signature.gpg && gpg --list-secret-keys && cp -r ~/.gnupg/ /tmp/gnupg/ && ls -la /tmp/gnupg/
           - bash ./src/main/resources/build.sh
-          - rm -rf /tmp/.gnupg/
+          - rm -rf /tmp/gnupg/
         services:
           - docker
