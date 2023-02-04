@@ -28,22 +28,6 @@ RUN apt-get update \
   && gpg --version
 
 
-# Maven Central Signature
-
-ARG MAVEN_CENTRAL_PASSWORD
-#ENV MAVEN_CENTRAL_PASSWORD $MAVEN_CENTRAL_PASSWORD
-
-COPY target/maven-central-signature.tpl ./maven-central-signature.tpl
-RUN export MAVEN_CENTRAL_PASSWORD=$MAVEN_CENTRAL_PASSWORD \
-  && echo $MAVEN_CENTRAL_PASSWORD \
-  && envsubst < maven-central-signature.tpl > maven-central-signature.gpg \
-  && cat maven-central-signature.tpl \
-  && cat maven-central-signature.gpg \
-  && gpg --batch --generate-key maven-central-signature.gpg \
-  && rm maven-central-signature.* \
-  && gpg --list-secret-keys
-
-
 # unzip
 
 RUN apt-get update \
@@ -98,6 +82,18 @@ ARG TERRAGRUNT_BASE_URL=https://github.com/gruntwork-io/terragrunt/releases/down
 RUN curl -sS -L ${TERRAGRUNT_BASE_URL}/terragrunt_linux_amd64 -o /usr/bin/terragrunt \
   && chmod +x /usr/bin/terragrunt \
   && terragrunt --version
+
+
+# Maven Central Signature
+
+ARG MAVEN_CENTRAL_PASSWORD
+
+COPY target/maven-central-signature.tpl ./maven-central-signature.tpl
+RUN export MAVEN_CENTRAL_PASSWORD=$MAVEN_CENTRAL_PASSWORD \
+  && envsubst < maven-central-signature.tpl > maven-central-signature.gpg \
+  && gpg --batch --generate-key maven-central-signature.gpg \
+  && rm maven-central-signature.* \
+  && gpg --list-secret-keys
 
 
 # Custom scripts

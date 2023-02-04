@@ -1,4 +1,4 @@
-image: alpelabs/ci-v1:latest
+image: go9tech/ci-v1:latest
 
 pipelines:
   default:
@@ -8,7 +8,7 @@ pipelines:
           - maven
           - docker
         script:
-          - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/build.sh)
+          - /opt/pipelines/build.sh
         services:
           - docker
 

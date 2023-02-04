@@ -1,4 +1,4 @@
-image: alpelabs/ci-vi:latest
+image: go9tech/ci-vi:latest
 
 pipelines:
   default:
@@ -8,7 +8,7 @@ pipelines:
           - maven
           - docker
         script:
-          - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/build.sh)
+          - /opt/pipelines/build.sh
         services:
           - docker
   branches:
@@ -19,7 +19,7 @@ pipelines:
             - maven
             - docker
           script:
-            - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/build.sh)
+            - /opt/pipelines/build.sh
           services:
             - docker
       - step:
@@ -27,7 +27,7 @@ pipelines:
           deployment: test
           trigger: automatic
           script:
-            - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/deploy.sh)
+            - /opt/pipelines/deploy.sh
     release/*:
       - step:
           name: Build
@@ -35,7 +35,7 @@ pipelines:
             - maven
             - docker
           script:
-            - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/build.sh)
+            - /opt/pipelines/build.sh
           services:
             - docker
       - step:
@@ -43,7 +43,7 @@ pipelines:
           deployment: staging
           trigger: automatic
           script:
-            - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/deploy.sh)
+            - /opt/pipelines/deploy.sh
     hotfix/*:
       - step:
           name: Build
@@ -51,7 +51,7 @@ pipelines:
             - maven
             - docker
           script:
-            - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/build.sh)
+            - /opt/pipelines/build.sh
           services:
             - docker
       - step:
@@ -59,7 +59,7 @@ pipelines:
           deployment: staging
           trigger: automatic
           script:
-            - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/deploy.sh)
+            - /opt/pipelines/deploy.sh
     master:
       - step:
           name: Build
@@ -67,7 +67,7 @@ pipelines:
             - maven
             - docker
           script:
-            - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/build.sh)
+            - /opt/pipelines/build.sh
           services:
             - docker
       - step:
@@ -75,7 +75,7 @@ pipelines:
           deployment: production
           trigger: manual
           script:
-            - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/deploy.sh)
+            - /opt/pipelines/deploy.sh
 
 definitions:
   services:

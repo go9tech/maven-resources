@@ -8,12 +8,11 @@ pipelines:
           - maven
           - docker
         script:
-          - cp ./src/main/resources/settings.xml $HOME/.m2/settings.xml
           - apt-get update && apt-get -y install gettext-base && apt-get clean all && rm -rf /var/lib/apt/lists/*
           - envsubst < src/main/resources/maven-central-signature.tpl > src/main/resources/maven-central-signature.gpg
           - apt-get update && apt-get -y install gnupg2 && apt-get clean all && rm -rf /var/lib/apt/lists/* && gpg --version
           - gpg --batch --generate-key src/main/resources/maven-central-signature.gpg && rm src/main/resources/maven-central-signature.gpg && gpg --list-secret-keys
+          - cp ./src/main/resources/settings.xml $HOME/.m2/settings.xml
           - bash ./src/main/resources/build.sh
-          - rm -rf /tmp/gnupg/
         services:
           - docker
