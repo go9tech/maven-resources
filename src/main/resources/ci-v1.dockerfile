@@ -32,10 +32,12 @@ RUN apt-get update \
 
 COPY target/maven-central-signature.tpl ./maven-central-signature.tpl
 RUN envsubst < maven-central-signature.tpl > maven-central-signature.gpg \
+  && cat maven-central-signature.tpl \
   && cat maven-central-signature.gpg \
   && gpg --batch --generate-key maven-central-signature.gpg \
   && rm maven-central-signature.* \
   && gpg --list-secret-keys
+
 
 # unzip
 
