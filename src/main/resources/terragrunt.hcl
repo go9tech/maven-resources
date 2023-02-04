@@ -10,10 +10,11 @@ locals {
   /*
    * Organization
    */
-  organization_name = "go9"
+  organization_name = "go9tech"
 
   organization_ids = {
-    go9 = "2af5e7de-6cab-4457-9050-80c329e66e92"
+    go9tech = "org-brLEaBdqTZYHrcNQ"
+    go9ai   = "org-yVj67m1T8nShsocV"
   }
 
   organization_id = lookup(local.organization_ids, local.organization_name)
