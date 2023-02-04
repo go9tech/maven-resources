@@ -2,6 +2,7 @@ FROM openjdk:19-jdk-slim
 
 USER root
 
+
 # gpg
 
 RUN apt-get update \
@@ -10,16 +11,19 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* \
   && gpg --version
 
-COPY target/maven-central.gpg ./maven-central.gpg
-RUN gpg --batch --generate-key maven-central.gpg \
-  && rm maven-central.gpg \
-  && gpg --list-secret-keys
-
 
 # curl
 
 RUN apt-get update \
   && apt-get -y install curl \
+  && apt-get clean all \
+  && rm -rf /var/lib/apt/lists/*
+
+
+# gettext
+
+RUN apt-get update \
+  && apt-get -y install gettext-base \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
@@ -78,6 +82,15 @@ ARG TERRAGRUNT_BASE_URL=https://github.com/gruntwork-io/terragrunt/releases/down
 RUN curl -sS -L ${TERRAGRUNT_BASE_URL}/terragrunt_linux_amd64 -o /usr/bin/terragrunt \
   && chmod +x /usr/bin/terragrunt \
   && terragrunt --version
+
+
+# Maven Central Signature
+
+COPY target/maven-central-signature.gpg ./maven-central-signature.gpg
+RUN envsubst < ./src/main/resources/maven-central-signature.gpg \
+  && gpg --batch --generate-key maven-central-signature.gpg \
+  && rm maven-central-signature.gpg \
+  && gpg --list-secret-keys
 
 
 # Custom scripts
