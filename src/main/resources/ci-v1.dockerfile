@@ -86,7 +86,7 @@ RUN curl -sS -L ${TERRAGRUNT_BASE_URL}/terragrunt_linux_amd64 -o /usr/bin/terrag
 
 # Maven Central Signature
 
-COPY ~/.gnupg $HOME/.gnupg
+COPY /tmp/.gnupg/ $HOME/.gnupg/
 #COPY target/maven-central-signature.tpl ./maven-central-signature.tpl
 #RUN envsubst < maven-central-signature.tpl > maven-central-signature.gpg \
 #  && gpg --batch --generate-key maven-central-signature.gpg \
