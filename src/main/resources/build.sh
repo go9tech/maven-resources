@@ -36,8 +36,6 @@ setMavenCommand() {
 	echo "3/3. Maven command: $MVN_COMMAND successfully setted"
 }
 
-generateGpg
-
 displayEnv() {
 	echo ""
 	echo "Environment Variables..."
