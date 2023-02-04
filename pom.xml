@@ -53,6 +53,9 @@
 		<docker-maven-plugin.contextDir>${project.basedir}</docker-maven-plugin.contextDir>
 		<docker-maven-plugin.dockerFileDir>${project.build.directory}</docker-maven-plugin.dockerFileDir>
 
+		<!-- maven-gpg-plugin -->
+		<maven-gpg-plugin.skip>true</maven-gpg-plugin.skip>
+
 		<!-- plugins versions -->
 		<build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
 		<docker-maven-plugin.version>0.40.3</docker-maven-plugin.version>
@@ -183,9 +186,9 @@
 						<goals>
 							<goal>sign</goal>
 						</goals>
-						<!-- configuration>
-							<keyname>23B32C20A8D70877</keyname>
-						</configuration -->
+						<configuration>
+							<skip>${maven-gpg-plugin.skip}</skip>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

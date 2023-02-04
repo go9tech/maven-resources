@@ -29,10 +29,6 @@
 			<password>${env.DOCKER_HUB_PASSWORD}</password>
 		</server>
 		<server>
-			<id>gpg.passphrase</id>
-			<passphrase>${env.MAVEN_CENTRAL_PASSWORD}</passphrase>
-		</server>
-		<server>
 			<id>maven-central-release</id>
 			<username>${env.MAVEN_CENTRAL_USERNAME}</username>
 			<password>${env.MAVEN_CENTRAL_PASSWORD}</password>
@@ -52,7 +48,13 @@
 			</activation>
 
 			<properties>
+
+				<!-- maven-gpg-plugin properties -->
+				<maven-gpg-plugin.skip>false</maven-gpg-plugin.skip>
+
+				<!--  -->
 				<sonar.login>${env.SONAR_LOGIN}</sonar.login>
+
 			</properties>
 
 			<pluginRepositories>

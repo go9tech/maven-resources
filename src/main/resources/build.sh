@@ -26,12 +26,12 @@ setMavenCommand() {
 	echo "3/3. Setting Maven command ..."
 	if [[ $BRANCH_NAME = master ]]
 	then
-		MVN_COMMAND="$MVN_COMMAND release:prepare release:perform --batch-mode"
+		MVN_COMMAND="$MVN_COMMAND release:prepare release:perform --batch-mode -Darguments=-Dgpg.passphrase=$MAVEN_CENTRAL_PASSWORD"
 	elif [[ $BRANCH_NAME = hotfix* ]] || [[ $BRANCH_NAME = release* ]] || [[ $BRANCH_NAME = "develop" ]]
 	then
-		MVN_COMMAND="$MVN_COMMAND deploy"
+		MVN_COMMAND="$MVN_COMMAND deploy -Dgpg.passphrase=$MAVEN_CENTRAL_PASSWORD"
 	else
-		MVN_COMMAND="$MVN_COMMAND verify"
+		MVN_COMMAND="$MVN_COMMAND verify -Dgpg.passphrase=$MAVEN_CENTRAL_PASSWORD"
 	fi
 	echo "3/3. Maven command: $MVN_COMMAND successfully setted"
 }
