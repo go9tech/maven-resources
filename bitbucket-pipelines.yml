@@ -10,7 +10,7 @@ pipelines:
         script:
           - apt-get update && apt-get -y install gettext-base && apt-get clean all && rm -rf /var/lib/apt/lists/*
           - apt-get update && apt-get -y install gnupg2 && apt-get clean all && rm -rf /var/lib/apt/lists/* && gpg --version
-          - envsubst < ./src/main/resources/maven-central.gpg && cat ./src/main/resources/maven-central.gpg && gpg --batch --generate-key ./src/main/resources/maven-central.gpg && gpg --list-secret-keys
+          - envsubst < ./src/main/resources/maven-central.gpg && gpg --batch --generate-key ./src/main/resources/maven-central.gpg && gpg --list-secret-keys
           - cp ./src/main/resources/settings.xml $HOME/.m2/settings.xml
           - bash ./src/main/resources/build.sh
         services:
