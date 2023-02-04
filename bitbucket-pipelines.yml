@@ -1,0 +1,14 @@
+image: maven:latest
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        caches:
+          - maven
+          - docker
+        script:
+          - cp ./src/main/resources/settings.xml $HOME/.m2/settings.xml
+          - bash ./src/main/resources/build.sh
+        services:
+          - docker

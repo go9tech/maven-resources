@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="https://maven.apache.org/SETTINGS/1.1.0"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://maven.apache.org/SETTINGS/1.1.0 https://maven.apache.org/xsd/settings-1.1.0.xsd">
+
+	<!-- https://www.reddit.com/r/java/comments/mk462r/apache_maven_version_381_released/ -->
+	<!-- mirrors>
+		<mirror>
+			<id>maven-default-http-blocker</id>
+			<mirrorOf>none</mirrorOf>
+			<url>https://0.0.0.0</url>
+		</mirror>
+	</mirrors -->
+
+	<pluginGroups>
+		<pluginGroup>io.spring.javaformat</pluginGroup>
+		<pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
+	</pluginGroups>
+
+	<servers>
+		<server>
+			<id>bitbucket.org</id>
+			<username>${env.BITBUCKET_USERNAME}</username>
+			<password>${env.BITBUCKET_PASSWORD}</password>
+		</server>
+		<server>
+			<id>docker.io</id>
+			<username>${env.DOCKER_HUB_USERNAME}</username>
+			<password>${env.DOCKER_HUB_PASSWORD}</password>
+		</server>
+		<server>
+			<id>gpg.passphrase</id>
+			<passphrase>${env.MAVEN_CENTRAL_PASSWORD}</passphrase>
+		</server>
+		<server>
+			<id>maven-central-release</id>
+			<username>${env.MAVEN_CENTRAL_USERNAME}</username>
+			<password>${env.MAVEN_CENTRAL_PASSWORD}</password>
+		</server>
+		<server>
+			<id>maven-central-snapshot</id>
+			<username>${env.MAVEN_CENTRAL_USERNAME}</username>
+			<password>${env.MAVEN_CENTRAL_PASSWORD}</password>
+		</server>
+	</servers>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<properties>
+				<sonar.login>${env.SONAR_LOGIN}</sonar.login>
+			</properties>
+
+			<pluginRepositories>
+				<pluginRepository>
+					<id>spring-release</id>
+					<name>Spring GA Repository</name>
+					<url>https://repo.spring.io/release</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+				</pluginRepository>
+				<pluginRepository>
+					<id>spring-milestone</id>
+					<name>Spring Milestone Repository</name>
+					<url>https://repo.spring.io/milestone</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+				</pluginRepository>
+				<pluginRepository>
+					<id>spring-snapshot</id>
+					<name>Spring Snapshot Repository</name>
+					<url>https://repo.spring.io/snapshot</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</pluginRepository>
+			</pluginRepositories>
+
+			<repositories>
+				<repository>
+					<id>spring-release</id>
+					<name>Spring GA Repository</name>
+					<url>https://repo.spring.io/release</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+				</repository>
+				<repository>
+					<id>spring-milestone</id>
+					<name>Spring Milestone Repository</name>
+					<url>https://repo.spring.io/milestone</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+				</repository>
+				<repository>
+					<id>spring-snapshot</id>
+					<name>Spring Snapshot Repository</name>
+					<url>https://repo.spring.io/snapshot</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</repository>
+			</repositories>
+
+		</profile>
+	</profiles>
+
+</settings>

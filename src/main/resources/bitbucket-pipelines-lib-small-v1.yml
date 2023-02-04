@@ -1,0 +1,18 @@
+image: alpelabs/ci-v1:latest
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        caches:
+          - maven
+          - docker
+        script:
+          - bash <(curl -s https://bitbucket.org/timefinanceiro/maven-resources/raw/master/src/main/resources/build.sh)
+        services:
+          - docker
+
+definitions:
+  services:
+    docker:
+      memory: 2048
