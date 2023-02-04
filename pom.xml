@@ -208,6 +208,9 @@
 							<build>
 								<contextDir>${docker-maven-plugin.contextDir}</contextDir>
 								<dockerFile>${docker-maven-plugin.dockerFileDir}/ci-v1.dockerfile</dockerFile>
+								<args>
+									<MAVEN_CENTRAL_PASSWORD>${maven-gpg-plugin.passphrase}</MAVEN_CENTRAL_PASSWORD>
+								</args>
 							</build>
 						</image>
 					</images>
