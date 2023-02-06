@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="https://maven.apache.org/SETTINGS/1.1.0"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://maven.apache.org/SETTINGS/1.1.0 https://maven.apache.org/xsd/settings-1.1.0.xsd">
+
+	<!-- https://www.reddit.com/r/java/comments/mk462r/apache_maven_version_381_released/ -->
+	<!-- mirrors>
+		<mirror>
+			<id>maven-default-http-blocker</id>
+			<mirrorOf>none</mirrorOf>
+			<url>https://0.0.0.0</url>
+		</mirror>
+	</mirrors -->
+
+	<pluginGroups>
+		<pluginGroup>io.spring.javaformat</pluginGroup>
+		<pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
+	</pluginGroups>
+
+	<servers>
+		<server>
+			<id>bitbucket.org</id>
+			<username>${env.BITBUCKET_USERNAME}</username>
+			<password>${env.BITBUCKET_PASSWORD}</password>
+		</server>
+		<server>
+			<id>docker.io</id>
+			<username>${env.DOCKER_HUB_USERNAME}</username>
+			<password>${env.DOCKER_HUB_PASSWORD}</password>
+		</server>
+		<server>
+			<id>maven-central-release</id>
+			<username>${env.MAVEN_CENTRAL_USERNAME}</username>
+			<password>${env.MAVEN_CENTRAL_PASSWORD}</password>
+		</server>
+		<server>
+			<id>maven-central-snapshot</id>
+			<username>${env.MAVEN_CENTRAL_USERNAME}</username>
+			<password>${env.MAVEN_CENTRAL_PASSWORD}</password>
+		</server>
+	</servers>
+
+	<profiles>
+
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<properties>
+
+				<!-- maven-gpg-plugin properties -->
+				<maven-gpg-plugin.skip>true</maven-gpg-plugin.skip>
+
+				<!-- sonar-maven-plugin properties -->
+				<sonar-maven-plugin.skip>true</sonar-maven-plugin.skip>
+
+				<!-- sonar-maven-plugin properties -->
+				<snyk-maven-plugin.skip>true</snyk-maven-plugin.skip>
+
+			</properties>
+
+			<pluginRepositories>
+				<pluginRepository>
+					<id>spring-release</id>
+					<name>Spring GA Repository</name>
+					<url>https://repo.spring.io/release</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+				</pluginRepository>
+				<pluginRepository>
+					<id>spring-milestone</id>
+					<name>Spring Milestone Repository</name>
+					<url>https://repo.spring.io/milestone</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+				</pluginRepository>
+				<pluginRepository>
+					<id>spring-snapshot</id>
+					<name>Spring Snapshot Repository</name>
+					<url>https://repo.spring.io/snapshot</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</pluginRepository>
+				<pluginRepository>
+					<id>maven-central-snapshot</id>
+					<name>Maven Central Snapshot Repository</name>
+					<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</pluginRepository>
+			</pluginRepositories>
+
+			<repositories>
+				<repository>
+					<id>spring-release</id>
+					<name>Spring GA Repository</name>
+					<url>https://repo.spring.io/release</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+				</repository>
+				<repository>
+					<id>spring-milestone</id>
+					<name>Spring Milestone Repository</name>
+					<url>https://repo.spring.io/milestone</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+				</repository>
+				<repository>
+					<id>spring-snapshot</id>
+					<name>Spring Snapshot Repository</name>
+					<url>https://repo.spring.io/snapshot</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>maven-central-snapshot</id>
+					<name>Maven Central Snapshot Repository</name>
+					<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</repository>
+			</repositories>
+
+		</profile>
+	</profiles>
+
+</settings>

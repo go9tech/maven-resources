@@ -3,28 +3,15 @@ locals {
   /*
    * Env
    */
-  env_stage = get_env("STAGE", "undefined")
-  env_qualifier = get_env("QUALIFIER", "undefined")
-
-
-  /*
-   * Organization
-   */
-  organization_name = "go9tech"
-
-  organization_ids = {
-    go9tech = "org-brLEaBdqTZYHrcNQ"
-    go9ai   = "org-yVj67m1T8nShsocV"
-  }
-
-  organization_id = lookup(local.organization_ids, local.organization_name)
+  env_stage        = get_env("STAGE", "undefined")
+  env_qualifier    = get_env("QUALIFIER", "undefined")
+  env_build_number = get_env("BITBUCKET_BUILD_NUMBER", "undefined")
 
 
   /*
    * Service
    */
-  artifact_id = "scw-base-stack"
-  //module = "@project.artifactId@"
+  artifact_id = "@project.parent.artifactId@"
   service_name_parts = regex("(.*)(-base-|-custom-)(.*)|(.*)$", local.artifact_id)
   service_name = local.service_name_parts[0] != null && local.service_name_parts[2] != null ? "${local.service_name_parts[0]}-${local.service_name_parts[2]}" : local.artifact_id
 
@@ -59,82 +46,9 @@ locals {
 
 
   /*
-   * Project
-   */
-  project_names = {
-    fet = "staging"
-    bug = "staging"
-    dev = "staging"
-    uat = "staging"
-    fix = "staging"
-    prd = "production"
-  }
-
-  project_name = lookup(local.project_names, local.branch_type)
-
-  project_ids = {
-    staging = "e9ceeb53-3398-4dd4-9b52-49b086b7d5a1"
-    production = "5cdce170-7767-4a51-ac1d-c41b1320ac48"
-  }
-
-  project_id = lookup(local.project_ids, local.project_name)
-
-
-  /*
-   * Region
-   */
-  regions = {
-    fet = ["fr-par"]
-    bug = ["fr-par"]
-    dev = ["fr-par"]
-    uat = ["fr-par"]
-    fix = ["fr-par"]
-    prd = ["fr-par"]
-  }
-
-  region = lookup(local.regions, local.branch_type)[0]
-
-
-  /*
-   * Zone
-   */
-  zones = {
-    fet = {
-      fr-par = ["fr-par-1"]
-    }
-    bug = {
-      fr-par = ["fr-par-1"]
-    }
-    dev = {
-      fr-par = ["fr-par-1"]
-    }
-    uat = {
-      fr-par = ["fr-par-1"]
-    }
-    fix = {
-      fr-par = ["fr-par-1"]
-    }
-    prd = {
-      fr-par = ["fr-par-1", "fr-par-2", "fr-par-3"]
-    }
-  }
-
-  zone = lookup(lookup(local.zones, local.branch_type), local.region)[0]
-
-
-  /*
    * Stage
    */
-  stages = {
-    fet = "fet"
-    bug = "bug"
-    dev = "dev"
-    uat = "uat"
-    fix = "fix"
-    prd = "prd"
-  }
-
-  stage = lookup(local.stages, local.branch_type)
+  stage = local.env_stage == "undefined" ? local.branch_type : local.env_stage
 
 
   /*
@@ -145,9 +59,53 @@ locals {
 
 
   /*
-   * Workspace
+   * Terraform Cloud
    */
-  workspace = "${local.service_name}-${local.qualifier}-${local.stage}"
+  tfc_organization_name = "go9tech"
+  tfc_workspace = "${local.service_name}-${local.stage}-${local.qualifier}"
+
+
+  /*
+   * Scaleway
+   */
+  scw_organization_name = "go9"
+  scw_organization_id = "2af5e7de-6cab-4457-9050-80c329e66e92"
+
+  scw_project_names = {
+    fet = "staging"
+    bug = "staging"
+    dev = "staging"
+    uat = "staging"
+    fix = "staging"
+    prd = "production"
+  }
+  scw_project_name = lookup(local.scw_project_names, local.branch_type)
+
+  scw_project_ids = {
+    staging = "e9ceeb53-3398-4dd4-9b52-49b086b7d5a1"
+    production = "5cdce170-7767-4a51-ac1d-c41b1320ac48"
+  }
+  scw_project_id = lookup(local.scw_project_ids, local.scw_project_name)
+
+  scw_regions = {
+    fet = "fr-par"
+    bug = "fr-par"
+    dev = "fr-par"
+    uat = "fr-par"
+    fix = "fr-par"
+    prd = "fr-par"
+  }
+  scw_region = lookup(local.scw_regions, local.branch_type)
+
+  scw_zones = {
+    fet = ["fr-par-1"]
+    bug = ["fr-par-1"]
+    dev = ["fr-par-1"]
+    uat = ["fr-par-1"]
+    fix = ["fr-par-1"]
+    prd = ["fr-par-1"]
+  }
+  scw_zone = lookup(local.scw_zones, local.branch_type)[0]
 
 }
 
@@ -157,9 +115,9 @@ generate "backend" {
   contents = <<EOF
 terraform {
   backend "remote" {
-    organization = "${local.organization_name}"
+    organization = "${local.tfc_organization_name}"
     workspaces {
-      name = "${local.workspace}"
+      name = "${local.tfc_workspace}"
     }
   }
 }
@@ -171,20 +129,20 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "scaleway" {
-  organization_id = "${local.organization_id}"
-  project_id      = "${local.project_id}"
-  region          = "${local.region}"
-  zone            = "${local.zone}"
+  organization_id = "${local.scw_organization_id}"
+  project_id      = "${local.scw_project_id}"
+  region          = "${local.scw_region}"
+  zone            = "${local.scw_zone}"
 }
 EOF
 }
 
 inputs = {
-  regions = local.regions
-  region  = local.region
-  zones   = local.zones
-  zone    = local.zone
-  stage = local.stage
-  qualifier = local.qualifier
-  build = get_env("BITBUCKET_BUILD_NUMBER", "undefined")
+  tfc_organization_name = local.tfc_organization_name
+  scw_region            = local.scw_region
+  scw_zones             = local.scw_zones
+  scw_zone              = local.scw_zone
+  stage                 = local.stage
+  qualifier             = local.qualifier
+  build                 = local.env_build_number
 }

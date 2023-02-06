@@ -59,7 +59,7 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
 
 ENV MAVEN_HOME /usr/share/maven
 
-COPY target/settings.xml /root/.m2/settings.xml
+COPY target/settings-ci.xml /root/.m2/settings.xml
 
 
 # Terrafrom
