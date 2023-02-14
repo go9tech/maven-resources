@@ -49,18 +49,22 @@ setArtifact() {
 downloadTerraformBundle() {
 	echo ""
 	echo "Downloading terraform bundle..."
-	mvn dependency:copy -Dartifact=${ARTIFACT} -DoutputDirectory=${TMP_DIR} -DstripVersion=true
+	cd $TMP_DIR
+	mvn dependency:copy -Dartifact=${ARTIFACT} -DoutputDirectory=. -DstripVersion=true
 	echo "Terraform bundle: $ARTIFACT successfully downloaded"
-	ls -la $TMP_DIR
+	ls -la .
+	cd ..
 	echo ""
 }
 
 extractTerraformBundle() {
 	echo ""
 	echo "Extracting terraform bundle..."
-	tar -xzf $(eval find ${TMP_DIR} -maxdepth 1 -mindepth 1 -name '*.tar.gz') -C ${TMP_DIR}
+	cd $TMP_DIR
+	tar -xzf $(eval find . -maxdepth 1 -mindepth 1 -name '*.tar.gz') -C .
 	echo "Terraform bundle: $ARTIFACT successfully extracted"
-	ls -la $TMP_DIR
+	ls -la .
+	cd ..
 	echo ""
 }
 
