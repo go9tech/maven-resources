@@ -36,17 +36,13 @@ setMavenCommand() {
 	echo "3/3. Maven command: $MVN_COMMAND successfully setted"
 }
 
-displayEnv() {
-	echo ""
-	echo "Environment Variables..."
-	env
-}
-
 execute() {
 	setBranchName
 	setGitConfig
 	setMavenCommand
-	displayEnv
+	echo "                                         "
+	echo "                                         "
+	$MVN_COMMAND
 }
 
 echo "                                          "
@@ -62,10 +58,4 @@ echo "                                          "
 echo " Build script version: @project.version@  "
 echo "                                          "
 echo "                                          "
-
 execute
-
-echo "                                         "
-echo "                                         "
-
-$MVN_COMMAND

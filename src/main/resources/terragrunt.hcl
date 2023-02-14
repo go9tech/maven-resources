@@ -11,7 +11,7 @@ locals {
   /*
    * Service
    */
-  artifact_id = "@project.parent.artifactId@"
+  artifact_id = "@project.artifactId@"
   service_name_parts = regex("(.*)(-base-|-custom-)(.*)|(.*)$", local.artifact_id)
   service_name = local.service_name_parts[0] != null && local.service_name_parts[2] != null ? "${local.service_name_parts[0]}-${local.service_name_parts[2]}" : local.artifact_id
 
@@ -61,8 +61,8 @@ locals {
   /*
    * Terraform Cloud
    */
-  tfc_organization_name = "go9tech"
-  tfc_workspace = "${local.service_name}-${local.stage}-${local.qualifier}"
+  tfe_organization_name = "go9tech"
+  tfe_workspace_name = "${local.service_name}-${local.stage}-${local.qualifier}"
 
 
   /*
@@ -115,9 +115,9 @@ generate "backend" {
   contents = <<EOF
 terraform {
   backend "remote" {
-    organization = "${local.tfc_organization_name}"
+    organization = "${local.tfe_organization_name}"
     workspaces {
-      name = "${local.tfc_workspace}"
+      name = "${local.tfe_workspace_name}"
     }
   }
 }
@@ -138,7 +138,7 @@ EOF
 }
 
 inputs = {
-  tfc_organization_name = local.tfc_organization_name
+  tfe_organization_name = local.tfe_organization_name
   scw_region            = local.scw_region
   scw_zones             = local.scw_zones
   scw_zone              = local.scw_zone

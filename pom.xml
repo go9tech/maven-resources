@@ -171,9 +171,19 @@
 									<type>yml</type>
 								</artifact>
 								<artifact>
+									<file>${project.build.directory}/build.sh</file>
+									<classifier>build</classifier>
+									<type>sh</type>
+								</artifact>
+								<artifact>
 									<file>${project.build.directory}/terragrunt.hcl</file>
 									<classifier>terragrunt</classifier>
 									<type>hcl</type>
+								</artifact>
+								<artifact>
+									<file>${project.build.directory}/terragrunt.sh</file>
+									<classifier>terragrunt</classifier>
+									<type>sh</type>
 								</artifact>
 							</artifacts>
 						</configuration>

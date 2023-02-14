@@ -98,6 +98,7 @@ RUN export GPG_PASSPHRASE=$GPG_PASSPHRASE \
 # Custom scripts
 
 COPY target/build.sh /opt/pipelines/build.sh
+COPY target/terragrunt.sh /opt/pipelines/terragrunt.sh
 COPY target/deploy.sh /opt/pipelines/deploy.sh
 
 RUN chmod +x /opt/pipelines/build.sh \
