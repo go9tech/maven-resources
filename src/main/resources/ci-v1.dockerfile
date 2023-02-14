@@ -3,6 +3,14 @@ FROM openjdk:19-jdk-slim
 USER root
 
 
+# coreutils
+
+RUN apt-get update \
+  && apt-get -y install coreutils \
+  && apt-get clean all \
+  && rm -rf /var/lib/apt/lists/*
+
+
 # curl
 
 RUN apt-get update \
