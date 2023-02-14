@@ -46,12 +46,12 @@ setArtifact() {
 downloadTerraformBundle() {
 	echo ""
 	echo "Downloading terraform bundle..."
-	mvn dependency:copy -Dartifact=${ARTIFACT} -DoutputDirectory=${TMP_DIR}
+	mvn dependency:copy -Dartifact=${ARTIFACT} -DoutputDirectory=${TMP_DIR} -DstripVersion=true
 	if [[ ! -z "$CLASSIFIER" ]]
 	then
-		TF_BUNDLE=${TMP_DIR}/${ARTIFACT_ID}-${VERSION}-${CLASSIFIER}.${PACKAGING}
+		TF_BUNDLE=${TMP_DIR}/${ARTIFACT_ID}-${CLASSIFIER}.${PACKAGING}
 	else
-		TF_BUNDLE=${TMP_DIR}/${ARTIFACT_ID}-${VERSION}.${PACKAGING}
+		TF_BUNDLE=${TMP_DIR}/${ARTIFACT_ID}.${PACKAGING}
 	fi
 	ls -la $TMP_DIR
 	echo "Terraform bundle: $TF_BUNDLE successfully downloaded"
