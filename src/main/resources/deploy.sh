@@ -36,14 +36,16 @@ setVersion() {
 	echo "4/4. Version: $VERSION successfully setted"
 }
 
+applyTerraform() {
+	/opt/pipelines/terragrunt.sh apply $BRANCH_NAME $GROUP_ID $ARTIFACT_ID $VERSION tar.gz
+}
+
 execute() {
 	setBranchName
 	setGroupId
 	setArtifactId
 	setVersion
-	echo "                                         "
-	echo "                                         "
-	/opt/pipelines/terragrunt.sh deploy $BRANCH_NAME $GROUP_ID $ARTIFACT_ID $VERSION tar.gz
+	applyTerraform
 }
 
 echo "                                          "
